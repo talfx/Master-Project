@@ -1,0 +1,16 @@
+# .NET
+**/bin/
+**/obj/
+**/*.user
+**/*.suo
+
+# Database
+**/database/data/
+
+# IDE
+.vs/
+.vscode/
+*.swp
+
+# Environment
+appsettings.Development.json
