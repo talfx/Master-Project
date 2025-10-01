@@ -1,6 +1,30 @@
 version: '3.8'
 
 services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: master_project_prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    depends_on:
+      - backend
+  backend:
+      build:
+        context: ./backend
+        dockerfile: Dockerfile
+      container_name: master_project_backend
+      ports:
+        - "8080:8080"
+      environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=ecommerce_db;Username=admin;Password=admin123
+      depends_on:
+        - postgres
   postgres:
     image: postgres:15
     container_name: master_project_db
