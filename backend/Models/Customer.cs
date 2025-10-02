@@ -11,7 +11,10 @@ public class Customer
     public string? City { get; set; }
     public string? Country { get; set; }
     public DateTime CreatedAt { get; set; }
-    
+    public int? UserId { get; set; }
+
+    // Navigation property
+    public User? User { get; set; }
     // Navigation property
     public ICollection<Order> Orders { get; set; } = new List<Order>();
 }
