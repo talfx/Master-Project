@@ -1,18 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Login from './Login';
-import Customers from './Customers';
+import Dashboard from './Dashboard';
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
-
   return (
-    <div className="App">
-      {!isLoggedIn ? (
-        <Login onLoginSuccess={() => setIsLoggedIn(true)} />
-      ) : (
-        <Customers />
-      )}
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Router>
   );
 }
 

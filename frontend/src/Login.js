@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 function Login() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [token, setToken] = useState('');
+  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -15,9 +16,9 @@ function Login() {
         username,
         password
       });
-      setToken(response.data.token);
-      setMessage(`Login successful! Welcome ${response.data.username}`);
+      
       localStorage.setItem('token', response.data.token);
+      navigate('/dashboard');
     } catch (error) {
       setMessage('Login failed: ' + (error.response?.data?.message || 'Unknown error'));
     }
@@ -49,7 +50,7 @@ function Login() {
           Login
         </button>
       </form>
-      {message && <p style={{ marginTop: '20px', color: token ? 'green' : 'red' }}>{message}</p>}
+      {message && <p style={{ marginTop: '20px', color: 'red' }}>{message}</p>}
     </div>
   );
 }
